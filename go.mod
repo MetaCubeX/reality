@@ -1,4 +1,4 @@
-module github.com/xtls/reality
+module github.com/metacubex/reality
 
 go 1.20
 

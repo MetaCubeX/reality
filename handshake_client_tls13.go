@@ -15,7 +15,7 @@ import (
 	"hash"
 	"time"
 
-	"github.com/xtls/reality/mlkem768"
+	"github.com/metacubex/reality/mlkem768"
 
 	"golang.org/x/exp/slices"
 )

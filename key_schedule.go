@@ -16,7 +16,7 @@ import (
 	"golang.org/x/crypto/hkdf"
 	"golang.org/x/crypto/sha3"
 
-	"github.com/xtls/reality/mlkem768"
+	"github.com/metacubex/reality/mlkem768"
 )
 
 // This file contains the functions necessary to compute the TLS 1.3 key

@@ -10,7 +10,7 @@ import (
 
 	"golang.org/x/crypto/cryptobyte"
 
-	"github.com/xtls/reality/hpke"
+	"github.com/metacubex/reality/hpke"
 )
 
 type echCipher struct {
