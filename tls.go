@@ -34,16 +34,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/pires/go-proxyproto"
 	"golang.org/x/crypto/chacha20poly1305"
 	"golang.org/x/crypto/curve25519"
 	"golang.org/x/crypto/hkdf"
 )
-
-type CloseWriteConn interface {
-	net.Conn
-	CloseWrite() error
-}
 
 type MirrorConn struct {
 	*sync.Mutex
@@ -122,19 +116,7 @@ func Server(ctx context.Context, conn net.Conn, config *Config) (*Conn, error) {
 		return nil, errors.New("REALITY: failed to dial dest: " + err.Error())
 	}
 
-	if config.Xver == 1 || config.Xver == 2 {
-		if _, err = proxyproto.HeaderProxyFromAddrs(config.Xver, conn.RemoteAddr(), conn.LocalAddr()).WriteTo(target); err != nil {
-			target.Close()
-			conn.Close()
-			return nil, errors.New("REALITY: failed to send PROXY protocol: " + err.Error())
-		}
-	}
-
-	raw := conn
-	if pc, ok := conn.(*proxyproto.Conn); ok {
-		raw = pc.Raw() // for TCP splicing in io.Copy()
-	}
-	underlying := raw.(CloseWriteConn) // *net.TCPConn or *net.UnixConn
+	underlying := conn
 
 	mutex := new(sync.Mutex)
 
@@ -340,10 +322,6 @@ func Server(ctx context.Context, conn net.Conn, config *Config) (*Conn, error) {
 			}
 			conn.Write(s2cSaved)
 			io.Copy(underlying, target)
-			// Here is bidirectional direct forwarding:
-			// client ---underlying--- server ---target--- dest
-			// Call `underlying.CloseWrite()` once `io.Copy()` returned
-			underlying.CloseWrite()
 		}
 		waitGroup.Done()
 	}()
