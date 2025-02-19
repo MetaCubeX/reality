@@ -19,10 +19,11 @@ import (
 	"hash"
 	"io"
 	"math/big"
-	"slices"
 	"time"
 
 	"github.com/xtls/reality/mlkem768"
+
+	"golang.org/x/exp/slices"
 )
 
 // maxClientPSKIdentities is the number of client PSK identities the server will
@@ -74,7 +75,7 @@ func (hs *serverHandshakeStateTLS13) handshake() error {
 		hs.suite = cipherSuiteTLS13ByID(hs.hello.cipherSuite)
 		c.cipherSuite = hs.suite.id
 		hs.transcript = hs.suite.hash.New()
-		
+
 		key, _ := generateECDHEKey(c.config.rand(), X25519)
 		copy(hs.hello.serverShare.data, key.PublicKey().Bytes())
 		peerKey, _ := key.Curve().NewPublicKey(hs.clientHello.keyShares[hs.clientHello.keyShares[0].group].data)

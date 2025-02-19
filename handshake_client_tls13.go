@@ -13,10 +13,11 @@ import (
 	"crypto/subtle"
 	"errors"
 	"hash"
-	"slices"
 	"time"
 
 	"github.com/xtls/reality/mlkem768"
+
+	"golang.org/x/exp/slices"
 )
 
 type clientHandshakeStateTLS13 struct {

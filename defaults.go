@@ -5,8 +5,9 @@
 package reality
 
 import (
-	"slices"
 	_ "unsafe" // for linkname
+
+	"golang.org/x/exp/slices"
 )
 
 // Defaults are collected in this file to allow distributions to more easily patch

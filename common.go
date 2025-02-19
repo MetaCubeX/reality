@@ -20,11 +20,12 @@ import (
 	"fmt"
 	"io"
 	"net"
-	"slices"
 	"strings"
 	"sync"
 	"time"
 	_ "unsafe" // for linkname
+
+	"golang.org/x/exp/slices"
 )
 
 const (

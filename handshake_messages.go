@@ -7,10 +7,11 @@ package reality
 import (
 	"errors"
 	"fmt"
-	"slices"
 	"strings"
 
 	"golang.org/x/crypto/cryptobyte"
+
+	"golang.org/x/exp/slices"
 )
 
 // The marshalingFunction type is an adapter to allow the use of ordinary
@@ -1933,7 +1934,7 @@ func transcriptMsg(msg handshakeMessage, h transcriptHash) error {
 			return nil
 		}
 	}
-	
+
 	data, err := msg.marshal()
 	if err != nil {
 		return err
